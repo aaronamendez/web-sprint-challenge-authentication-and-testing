@@ -1,8 +1,11 @@
 const router = require('express').Router();
+const bcrypt = require('bcryptjs');
 
-router.post('/register', (req, res) => {
-  res.end('implement register, please!');
-  /*
+const { validateBody, userIsUnique } = require('./auth-middleware');
+
+router.post('/register', validateBody, userIsUnique, async (req, res) => {
+	res.json({ message: 'OK!', user: req.user });
+	/*
     IMPLEMENT
     You are welcome to build additional middlewares to help with the endpoint's functionality.
     DO NOT EXCEED 2^8 ROUNDS OF HASHING!
@@ -21,17 +24,14 @@ router.post('/register', (req, res) => {
         "password": "2a$08$jG.wIGR2S4hxuyWNcBf9MuoC4y0dNy7qC/LbmtuFBSdIhWks2LhpG"
       }
 
-    3- On FAILED registration due to `username` or `password` missing from the request body,
-      the response body should include a string exactly as follows: "username and password required".
-
     4- On FAILED registration due to the `username` being taken,
       the response body should include a string exactly as follows: "username taken".
   */
 });
 
 router.post('/login', (req, res) => {
-  res.end('implement login, please!');
-  /*
+	res.end('implement login, please!');
+	/*
     IMPLEMENT
     You are welcome to build additional middlewares to help with the endpoint's functionality.
 
