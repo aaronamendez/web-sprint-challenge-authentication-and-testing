@@ -24,7 +24,20 @@ async function userIsUnique(req, res, next) {
 		});
 }
 
+async function findUserByUsername(req, res, next) {
+	Users.findUser(req.user.username).then((user) => {
+		if (user) {
+			// Continue ...
+			res.json(user);
+		} else {
+			// Needs to be invalid credentials.
+			res.status(400).json('User not found');
+		}
+	});
+}
+
 module.exports = {
 	validateBody,
 	userIsUnique,
+	findUserByUsername,
 };
