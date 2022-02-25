@@ -1,4 +1,5 @@
 module.exports = (req, res, next) => {
+	res.json('Happened!');
 	next();
 	/*
     IMPLEMENT

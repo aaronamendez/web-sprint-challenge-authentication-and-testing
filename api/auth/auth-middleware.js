@@ -28,10 +28,11 @@ async function findUserByUsername(req, res, next) {
 	Users.findUser(req.user.username).then((user) => {
 		if (user) {
 			// Continue ...
-			res.json(user);
+			req.dbUser = user;
+			next();
 		} else {
 			// Needs to be invalid credentials.
-			res.status(400).json('User not found');
+			res.status(400).json('invalid credentials');
 		}
 	});
 }
