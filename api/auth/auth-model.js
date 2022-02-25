@@ -16,11 +16,8 @@ const createUser = async (body) => {
 	return user;
 };
 
-// const findByUsername = async (username) => {
-
-// }
-
 module.exports = {
 	findUser,
 	createUser,
+	findById,
 };
