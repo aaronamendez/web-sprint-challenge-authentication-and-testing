@@ -54,3 +54,36 @@ describe('tests the users model', () => {
 		expect(result).toEqual({ id: 1, username: 'foo', password: 'bar' });
 	});
 });
+
+describe('test server endpoints', () => {
+	test('call the `up` endpoint', async () => {
+		const result = await request(server).get('/');
+		expect(result.status).toBe(200);
+		expect(result.body).toEqual({ api: 'up' });
+	});
+
+	test('[POST] /api/auth/register', async () => {
+		let result = await request(server)
+			.post('/api/auth/register')
+			.send({ username: 'foo', password: 'bar' });
+
+		expect(result.status).toBe(200);
+	});
+
+	test('[POST] /api/auth/login', async () => {
+		const insert = await Users.createUser({
+			username: 'foo',
+			password: 'bar',
+		});
+		expect(insert).toEqual({ id: 1, username: 'foo', password: 'bar' });
+		const usernameInput = 'foo';
+		const result = await Users.findUser(usernameInput);
+		expect(result).toEqual({ id: 1, username: 'foo', password: 'bar' });
+
+		let finalResult = await request(server)
+			.post('/api/auth/login')
+			.send({ username: 'foo', password: 'bar' });
+
+		expect(finalResult.status).toBe(200);
+	});
+});

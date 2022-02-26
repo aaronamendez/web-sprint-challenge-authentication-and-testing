@@ -18,7 +18,7 @@ router.post('/register', validateBody, userIsUnique, async (req, res) => {
 	};
 	Users.createUser(body)
 		.then((user) => {
-			res.json(user);
+			res.status(201).json(user);
 		})
 		.catch((err) => res.status(500).json(err));
 });
